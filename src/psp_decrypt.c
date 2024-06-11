@@ -252,7 +252,7 @@ err_exit:
 static rc_t derive_psp_key(struct pkt_context *pkt_ctx) {
   rc_t rc;
 
-  rc = derive_psp_key_128(pkt_ctx, (uint8_t)1, pkt_ctx->key.octets);
+  return derive_psp_key_128(pkt_ctx, (uint8_t)1, pkt_ctx->key.octets);
   if ((rc != SUCCESS_RC) || (pkt_ctx->crypto_alg == AES_GCM_128)) return rc;
   return derive_psp_key_128(
       pkt_ctx, (uint8_t)2,
