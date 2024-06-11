@@ -637,7 +637,7 @@ static pkt_rc_t transport_encap(struct pkt_context *pkt_ctx) {
     psp->s_d_ver_v_1 =
         (psp_ver << PSP_HDR_VER_SHIFT) | PSP_HDR_FLAG_V | PSP_HDR_ALWAYS_1;
     vc = (uint64_t *)(((uint8_t *)psp) + base_psp_hdr_len);
-    *vc = 0;
+    *vc = 0xeeddccbbaa998877;
   } else {
     psp->hdr_ext_len = PSP_HDR_EXT_LEN_MIN;
     psp->s_d_ver_v_1 = (psp_ver << PSP_HDR_VER_SHIFT) | PSP_HDR_ALWAYS_1;
@@ -805,7 +805,7 @@ static pkt_rc_t tunnel_encap(struct pkt_context *pkt_ctx) {
     psp->s_d_ver_v_1 =
         (psp_ver << PSP_HDR_VER_SHIFT) | PSP_HDR_FLAG_V | PSP_HDR_ALWAYS_1;
     vc = (uint64_t *)(((uint8_t *)psp) + base_psp_hdr_len);
-    *vc = 0;
+    *vc = 0xeeddccbbaa998877;
     psp_hdr_len = base_psp_hdr_len + PSP_HDR_VC_OCTETS;
   } else {
     psp->hdr_ext_len = PSP_HDR_EXT_LEN_MIN;
