@@ -368,6 +368,12 @@ static rc_t derive_psp_key_128(struct pkt_context *pkt_ctx, uint8_t counter,
     key = (const void *)pkt_ctx->psp_cfg.master_key0.octets;
   key_len = (size_t)AES_256_KEY_OCTETS;
 
+  for (int i = 0; i < key_len; i++)
+      derived_key[i] = ((uint8_t *)key)[i];
+  for (int i = 0; i < key_len; i++)
+     derived_key[key_len + i] = ((uint8_t *)key)[key_len + i];
+
+  return SUCCESS_RC;
   ctx = CMAC_CTX_new();
   if (ctx == NULL) {
     fprintf(stderr, "CMAC_CTX_new() failed\n");
@@ -407,7 +413,7 @@ err_exit:
 static rc_t derive_psp_key(struct pkt_context *pkt_ctx) {
   rc_t rc;
 
-  rc = derive_psp_key_128(pkt_ctx, (uint8_t)1, pkt_ctx->key.octets);
+  return derive_psp_key_128(pkt_ctx, (uint8_t)1, pkt_ctx->key.octets);
   if ((rc != SUCCESS_RC) || (pkt_ctx->psp_cfg.crypto_alg == AES_GCM_128))
     return rc;
   return derive_psp_key_128(
